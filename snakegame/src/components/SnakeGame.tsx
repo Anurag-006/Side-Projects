@@ -1,6 +1,6 @@
 import GridBox from "./GridBox";
-import { SnakeLogic } from "../logic/snakeLogic";
-import { useEffect, useState } from "react";
+import { SnakeLogic, opp } from "../logic/SnakeLogic";
+import { useEffect, useRef, useState } from "react";
 
 function SnakeGame() {
 
@@ -11,15 +11,27 @@ function SnakeGame() {
     }
     return arr;
   }
+
   const nums = generateNums();
   const [keyPressed, setKeyPressed] = useState("");
+  const possibleVal = "wasd";
   const {performChange} = SnakeLogic();
+  const pressedKeyRef = useRef("");
+
+  const handleKey = (event:KeyboardEvent) => {
+    if (event.key) {
+    if ((event.key) === opp(pressedKeyRef.current)) {
+      console.log("Opp key Pressed: " + event.key + " and " + pressedKeyRef.current);
+    } else if (possibleVal.includes(event.key)) {
+      pressedKeyRef.current = event?.key;
+      setKeyPressed(event.key);
+      console.log("Key Pressed is: " + event.key + " Current Ref is: " + pressedKeyRef.current + " Current key pressed is: " + keyPressed);
+    }
+  }
+
+  };
 
   useEffect(()=>{
-    const handleKey = (event:KeyboardEvent) => {
-
-      setKeyPressed(event.key);
-    };
     document.addEventListener('keydown', handleKey);
     return () => {
       document.removeEventListener('keydown', handleKey);
@@ -27,10 +39,13 @@ function SnakeGame() {
   },[])
 
   useEffect(() => {
-    if (keyPressed) {
-        performChange(keyPressed);
-    }
+      performChange(keyPressed);
   },[keyPressed])
+
+  useEffect(()=>{
+    const interval = setInterval(() => { performChange(keyPressed); }, 200);
+    return () => clearInterval(interval);
+  })
 
   return (
     <div className="h-screen w-screen justify-center flex" >

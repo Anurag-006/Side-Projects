@@ -9,6 +9,12 @@ const SnakeContext = createContext<{
   setOldAxis: React.Dispatch<React.SetStateAction<string>>; 
   snakeHead: number;
   setSnakeHead: React.Dispatch<React.SetStateAction<number>>
+  snakeFood: number;
+  setSnakeFood: React.Dispatch<React.SetStateAction<number>>;
+  isGameOver: boolean;
+  setIsGameOver: React.Dispatch<React.SetStateAction<boolean>>;
+  score: number;
+  setScore: React.Dispatch<React.SetStateAction<number>>;
 }>({
   snakeArr: [124],
   setSnakeArr: () => {},
@@ -18,6 +24,12 @@ const SnakeContext = createContext<{
   setOldAxis: () => {},
   snakeHead: 124,
   setSnakeHead: () => {},
+  snakeFood: 100,
+  setSnakeFood: () => {},
+  isGameOver: false,
+  setIsGameOver: () => {},
+  score: 0,
+  setScore: () => {},
 });
 
 export default SnakeContext;
