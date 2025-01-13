@@ -15,7 +15,7 @@ function SnakeLogic() {
     score,
     setScore,
   } = useContext(SnakeContext);
-  
+
   const possibleVals = ["w", "a", "s", "d"];
 
   const handleMovement = (keyPressed: string) => {
@@ -25,7 +25,6 @@ function SnakeLogic() {
       keyPressed === "s" ||
       keyPressed === "d"
     ) {
-
       let newAxis = findAxis(keyPressed);
       if (axis !== opp(newAxis)) {
         const newHead = findHead(keyPressed, snakeHead);
@@ -33,31 +32,34 @@ function SnakeLogic() {
         if (snakeArr.includes(newHead)) {
           setIsGameOver(true);
         } else {
-            if (newHead === snakeFood) {
-              const newArr = getNewArr(snakeArr);
-              const newFoodLoc = newFood(newArr);
-              setSnakeFood(newFoodLoc);
-              setScore(score+1);
-              let newSnakeArr = [newHead, ...snakeArr];
-              setSnakeHead(newHead);
-              setSnakeArr(newSnakeArr);
-              setAxis(newAxis);
-            } else {
-              let newArr = [newHead, ...snakeArr];
-              newArr.pop();
-              setSnakeHead(newHead);
-              setSnakeArr(newArr);
-              setAxis(newAxis);
-            }
+          if (newHead === snakeFood) {
+            const newArr = getNewArr(snakeArr);
+            const newFoodLoc = newFood(newArr);
+            setSnakeFood(newFoodLoc);
+            setScore(score + 1);
+            let newSnakeArr = [newHead, ...snakeArr];
+            setSnakeHead(newHead);
+            setSnakeArr(newSnakeArr);
+            setAxis(newAxis);
+          } else {
+            let newArr = [newHead, ...snakeArr];
+            newArr.pop();
+            setSnakeHead(newHead);
+            setSnakeArr(newArr);
+            setAxis(newAxis);
+          }
+
+          if (crossBoundary(snakeArr)) {
+            setIsGameOver(true);
+          }
         }
       }
     }
   };
 
   const performChange = (keyPressed: string) => {
-    if (possibleVals.includes(keyPressed))
-      handleMovement(keyPressed);
-  }
+    if (possibleVals.includes(keyPressed)) handleMovement(keyPressed);
+  };
   return { performChange };
 }
 
@@ -104,6 +106,15 @@ function opp(inp: string) {
     case "d":
       return "a";
   }
+}
+
+function crossBoundary(snakeArr: number[]): boolean {
+  if (snakeArr[0] < 0) return true;
+  if (snakeArr[0] > 224) return true;
+  if (snakeArr[0] % 15 === 0 && snakeArr[1] % 15 === 14) return true;
+  if (snakeArr[0] % 15 === 14 && snakeArr[1] % 15 === 0) return true;
+
+  return false;
 }
 
 function findAxis(inp: string) {

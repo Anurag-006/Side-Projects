@@ -1,14 +1,14 @@
 import { createContext } from "react";
 
 const SnakeContext = createContext<{
-  snakeArr: number[]; 
-  setSnakeArr: React.Dispatch<React.SetStateAction<number[]>>; 
+  snakeArr: number[];
+  setSnakeArr: React.Dispatch<React.SetStateAction<number[]>>;
   axis: string;
   oldAxis: string;
-  setAxis: React.Dispatch<React.SetStateAction<string>>; 
-  setOldAxis: React.Dispatch<React.SetStateAction<string>>; 
+  setAxis: React.Dispatch<React.SetStateAction<string>>;
+  setOldAxis: React.Dispatch<React.SetStateAction<string>>;
   snakeHead: number;
-  setSnakeHead: React.Dispatch<React.SetStateAction<number>>
+  setSnakeHead: React.Dispatch<React.SetStateAction<number>>;
   snakeFood: number;
   setSnakeFood: React.Dispatch<React.SetStateAction<number>>;
   isGameOver: boolean;
